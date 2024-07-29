@@ -1,0 +1,24 @@
+Xây dựng ứng dụng hỗ trợ cho cơ quan quản lý thông tinnền thuộc các cụm, tuyến tái định cư theo mô tả sau:
+-	Một nền nhà sẽ thuộc lô cụ thể. Giả sử thông tin lô đã có, không cần quản lý thông tin lô.
+-	Tinh trạng nền có thể là “Đã giao” hoặc “Nền trống”. Nếu nền đã giao thì quản lý thông tin cụ thể của người mua để dễ quản lý cho việc thanh toán.
+-	Yêu cầu các chức năng cần đạt được như sau:
+•	Trang Xem danh sách các nền được quản lý:
++ Thể hiện các thông tin: Tên nền, Diện tích, Giá trị nền, tình trạng, Người mua (nếu có).
++ Có bộ lọc theo tình trạng.
++ Có tìm kiếm theo tên người mua.
+•	Thêm thông tin nền và người mua.
+•	Cập nhật thông tin nền và người mua.
+•	Xóa thông tin nền và người mua.
+
+-	Các thông tin nền cần quản lý:
+•	Tên nền.
+•	Diện tích
+•	Giá trị nền.
+•	Tình trạng.
+•	Địa chỉ
+•	Ghi chú.
+-	Các thông tin của người mua cần quản lý:
+•	Họ tên.
+•	Số CMND.
+•	Ngày ký hợp đồng mua nền.
+•	SĐT liên hệ.
