@@ -1,0 +1,191 @@
+﻿
+@model IEnumerable<DE1.Models.QLNen>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Quản lý nền đất</h2>
+
+<p>
+
+    <ul class="bt-list">
+
+
+
+        <li><a href="@Url.Action("Create", "Home")" class="hvr-icon-float-away col-10">Thêm mới</a></li>
+
+    </ul>
+</p>
+<br />
+<form action="#" method="get">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="selector1" class="col-sm-4 control-label">Tên người mua</label>
+                <div class="col-sm-8">
+                    <div class="form-group">
+                        <input  type="text" class="form-control " id="FullName" placeholder="Tên người mua" name="TenNguoiMua">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="selector1" class="col-sm-4 control-label">Trạng thái</label>
+                <div class="col-sm-8">
+                    <select name="TrangThai" id="selector1" class="form-control1">
+                        <option value="-1">------------------------------</option>
+                        <option value="0">Nền trống</option>
+                        <option value="1">Đã giao</option>
+
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <button type="submit" class="btn btn-default w3ls-button">Tìm Kiếm</button>
+
+            </div>
+        </div>
+
+    </div>
+</form>
+
+<br />
+<table id="example" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Tên Người Mua</th>
+            <th>CCCD</th>
+            <th>SDT</th>
+            <th>Tên Nền</th>
+            <th>Diện tích</th>
+            <th>Tình trạng</th>
+            <th>Địa chỉ</th>
+            <th>Ghi chú</th>
+            <th>#</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+           
+            <tr>
+                <td class="text-center">@item.FullName</td>
+                @if (item.UserID == null)
+                {
+                    <td class="text-center"> </td>
+                    <td class="text-center"></td>
+                }
+                else
+                {
+                    <td class="text-center">@item.User.CCCD </td>
+                    <td class="text-center">@item.User.Phone</td>
+                }
+
+
+                <td class="text-center">@item.TenNen</td>
+                <td class="text-center">@item.DienTich</td>
+                @if (item.TinhTrang == true)
+                {
+                    <td>Đã giao</td>
+                }
+                else
+                {
+                    <td>Nền trống</td>
+                }
+
+                <td>@item.DiaChi</td>
+                <td>@item.GhiChu</td>
+                <td>
+
+
+
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @*@Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
+                    <a class="Delete" data-item="@item.ID" href="#">Delete</a>
+                </td>
+            </tr>
+        }
+
+
+</table>
+<style>
+    button.swal2-confirm.btn.btn-success {
+        margin-left: 8px
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+
+
+    });
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+    })
+    $(".Delete").click(function () {
+        var id = $(this).attr("data-item");
+        console.log(id);
+        swalWithBootstrapButtons.fire({
+            title: 'Bạn đã chắc chắn?',
+            text: "Nếu bạn xóa thì không khôi phục được!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Vâng',
+            cancelButtonText: 'Hủy!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "GET",
+                    url: "https://localhost:44329/Home/Delete?ID=" + id,
+                    success: function (data) {
+                        if (data.mess == "success") {
+                            swalWithBootstrapButtons.fire({
+
+                                icon: 'success',
+                                title: 'Đã xóa',
+                                text: 'Bạn đã xóa thành công',
+                                showConfirmButton: true,
+
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.reload()
+                                }
+                            })
+
+                        }
+                        else {
+                            swalWithBootstrapButtons.fire(
+                                'Có lỗi',
+                                'Có lỗi xảy ra, vui lòng thử lại.',
+                                'error'
+                            )
+                        }
+                    }
+                });
+
+
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'Đã hủy',
+                    'Đã hủy thao thác từ chối yêu cầu',
+                    'error'
+                )
+            }
+        })
+    })
+</script>

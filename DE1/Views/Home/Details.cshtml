@@ -1,0 +1,51 @@
+﻿@model DE1.Models.QLNen
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container mt-3">
+    <h2>Chi tiết</h2>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Tên người mua</th>
+                <th>CCCD</th>
+                <th>Sdt</th>
+                <th>Tên nền</th>
+                <th>Diện tích</th>
+                <th>Tình trạng</th>
+                <th>Địa chỉ</th>
+                <th>Ghi chú</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="text-center">@Model.FullName</td>
+                <td class="text-center">@Model.User.CCCD</td>
+                <td class="text-center">@Model.User.Phone</td>
+                <td class="text-center">@Model.TenNen</td>
+                <td class="text-center">@Model.DienTich</td>
+                @if (Model.TinhTrang == true)
+                {
+                    <td class="text-center">Đã giao</td>
+                }
+                else
+                {
+                    <td class="text-center">Nền trống</td>
+                }
+
+                <td class="text-center">@Model.DiaChi</td>
+                <td class="text-center">@Model.GhiChu</td>
+            </tr>
+           
+        </tbody>
+    </table>
+</div>
+
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
